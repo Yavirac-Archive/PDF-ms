@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, OnModuleInit } from '@nestjs/common';
+import { HttpStatus, Injectable, NotFoundException, OnModuleInit } from '@nestjs/common';
 import { CreatePdfDto } from './dto/create-pdf.dto';
 import { UpdatePdfDto } from './dto/update-pdf.dto';
 import { PrismaClient } from '@prisma/client';
@@ -23,18 +23,21 @@ export class PdfService extends PrismaClient implements OnModuleInit {
   async findOne(id: number) {
 
     const pdf = await this.pdf.findFirst({
-      where: { id, available:true}
+      where: { id, available: true }
     });
 
     if (!pdf) {
-      throw new RpcException('pdf with ${id} not found');
+      throw new RpcException({
+        message: 'pdf with id #${ id } not found',
+        status: HttpStatus.BAD_REQUEST
+      });
     }
     return pdf;
   }
 
   async update(id: number, updatePdfDto: UpdatePdfDto) {
 
-    const {id:__, ...data}= updatePdfDto;
+    const { id: __, ...data } = updatePdfDto;
 
     await this.findOne(id);
 
@@ -49,12 +52,12 @@ export class PdfService extends PrismaClient implements OnModuleInit {
     await this.findOne(id);
 
     const pdf = await this.pdf.update({
-      where:{id},
-      data:{
-        available:false,
+      where: { id },
+      data: {
+        available: false,
       }
     })
     return pdf
   }
-  }
+}
 
