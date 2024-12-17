@@ -16,7 +16,8 @@ const envSchema=joi.object({
 
 const {error,value} = envSchema.validate(process.env);
 
-if (error){
+if (error) {
+    console.error('Validation error:', error.details); // Muestra detalles del error
     throw new Error('config validation error');
 }
 

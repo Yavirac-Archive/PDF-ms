@@ -1,22 +1,14 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreatePdfDto } from './create-pdf.dto';
-import { IsString, IsOptional, IsBoolean, IsNumber, IsPositive } from 'class-validator';
+import { UploadFileDto } from './create-pdf.dto';
+import { IsString, IsOptional, IsBoolean, IsNumber, IsPositive, IsUUID } from 'class-validator';
 
-export class UpdatePdfDto extends PartialType(CreatePdfDto) {
+export class UpdatePdfDto extends PartialType(UploadFileDto) {
 
-    @IsNumber()
-    @IsPositive()
-    id:number;
+   
+    @IsUUID()
+    id:string;
 
-    @IsString()
-    @IsOptional()
-    title?: string;
-  
     @IsString()
     @IsOptional()
     filePath?: string;
-  
-    @IsBoolean()
-    @IsOptional()
-    delete?: boolean;
 }

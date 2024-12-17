@@ -1,23 +1,16 @@
-import { IsString, IsNotEmpty, IsOptional, IsBoolean } from 'class-validator';
-export class CreatePdfDto {
+import { IsNotEmpty, IsString } from 'class-validator';
 
-    
+export class UploadFileDto {
+  @IsString()
+  @IsNotEmpty()
+  filename: string;
 
-    @IsString()
-    @IsNotEmpty()
-    title: string;
+  @IsString()
+  @IsNotEmpty()
+  filePath: string;
+
   
-    @IsString()
-    @IsNotEmpty()
-    filePath: string;
-  
-    @IsOptional()
-    createdAt?: Date; 
-  
-    @IsOptional()
-    updatedAt?: Date; 
-  
-    @IsOptional()
-    @IsBoolean()
-    delete?: boolean; 
+  @IsString()
+  @IsNotEmpty()
+  fileUrl: string;
 }
